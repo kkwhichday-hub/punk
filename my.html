@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French OS - Cyber-Yellow Edition</title>
+    <style>
+        :root {
+            --neon-green: #39ff14;
+            --neon-pink: #ff007f;
+            --neon-yellow: #fdf500; /* New Primary Color */
+            --dark-bg: #0d0d0d;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-yellow);
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Scanline effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+            z-index: 2;
+            background-size: 100% 2px;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--neon-yellow);
+            text-shadow: 3px 3px var(--neon-pink);
+            border: 4px double var(--neon-yellow); /* Industrial Double Border */
+            padding: 10px 30px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 850px;
+            border: 2px solid var(--neon-yellow); /* Changed from Blue to Yellow */
+            padding: 25px;
+            background: rgba(15, 15, 0, 0.9);
+            box-shadow: 0 0 20px rgba(253, 245, 0, 0.2);
+            margin-top: 20px;
+            position: relative;
+        }
+
+        /* Yellow corner accents */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -5px; left: -5px;
+            width: 20px; height: 20px;
+            border-top: 5px solid var(--neon-yellow);
+            border-left: 5px solid var(--neon-yellow);
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--neon-yellow);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .console {
+            height: 180px;
+            background: #000;
+            padding: 15px;
+            overflow-y: auto;
+            border-left: 4px solid var(--neon-pink);
+            margin-bottom: 25px;
+            color: var(--neon-green);
+            font-size: 0.85rem;
+        }
+
+        .packet-loss-box {
+            font-size: 1.8rem;
+            min-height: 120px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed var(--neon-yellow);
+            padding: 30px;
+            background: rgba(253, 245, 0, 0.05);
+        }
+
+        .word { transition: all 0.2s; }
+        .lost {
+            color: var(--neon-pink);
+            text-decoration: line-through;
+            opacity: 0.2;
+            filter: blur(3px);
+        }
+        .understood {
+            color: var(--neon-yellow); /* Understood words now glow yellow */
+            font-weight: bold;
+            text-shadow: 0 0 12px var(--neon-yellow);
+        }
+
+        .controls {
+            margin-top: 30px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            background: transparent;
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            padding: 12px 25px;
+            cursor: pointer;
+            font-family: 'Courier New', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        button:hover {
+            background: var(--neon-yellow);
+            color: black;
+            box-shadow: 0 0 30px var(--neon-yellow);
+        }
+
+        .derrida-quote {
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid #333;
+            font-style: italic;
+            color: var(--neon-pink);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .glitch { animation: glitch 1.5s infinite; }
+
+        @keyframes glitch {
+            0% { transform: skew(0deg); }
+            10% { transform: skew(2deg); color: var(--neon-pink); }
+            11% { transform: skew(0deg); color: var(--neon-yellow); }
+            50% { transform: skew(-1deg); }
+            51% { transform: skew(3deg); }
+            52% { transform: skew(0deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="glitch">FR_PROTOCOL_v2.0</h1>
+
+    <div class="container">
+        <div class="status-bar">
+            <span>ID: ENGINEER_ST_06</span>
+            <span>MEMORY_LOAD: 92%</span>
+            <span>OS: DERRIDA_RECON_v1</span>
+        </div>
+
+        <div class="console" id="consoleLog">
+            > Kernel ready...<br>
+            > Initializing "Derrida" Deconstruction Module...<br>
+            > Warning: Real-time audio processing latency detected.<br>
+        </div>
+
+        <div class="packet-loss-box" id="displayArea">
+            [READY_TO_SCAN]
+        </div>
+
+        <div class="controls">
+            <button onclick="startListening()">Listen (Process Stream)</button>
+            <button onclick="resetSystem()" style="border-color: var(--neon-pink); color: var(--neon-pink);">Clear Cache</button>
+        </div>
+    </div>
+
+    <div class="derrida-quote">
+        "Il n'y a pas de hors-texte."<br>
+        <span style="font-size: 0.8rem; color: #666;">// Logic: Meaning requires structure. Without text, sound is just noise.</span>
+    </div>
+
+    <script>
+        // The phrase you are "listening" to
+        const fullSentence = "Est-ce que tu as compris la leçon de grammaire ?";
+        // The indices of words you actually catch (A2 level)
+        const understoodIndices = [2, 3, 7, 8]; // tu, as, leçon, grammaire
+
+        function log(message) {
+            const consoleLog = document.getElementById('consoleLog');
+            consoleLog.innerHTML += `> ${message}<br>`;
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+
+        function startListening() {
+            const displayArea = document.getElementById('displayArea');
+            const words = fullSentence.split(' ');
+            displayArea.innerHTML = '';
+            log("STREAMING AUDIO...");
+            
+            words.forEach((word, index) => {
+                setTimeout(() => {
+                    const span = document.createElement('span');
+                    span.className = 'word';
+                    span.innerText = word;
+                    
+                    if (understoodIndices.includes(index)) {
+                        span.classList.add('understood');
+                        log(`[VALID] Token identified: "${word}"`);
+                    } else {
+                        span.classList.add('lost');
+                        log(`[FATAL] Packet ${index} dropped: Undefined character.`);
+                    }
+                    
+                    displayArea.appendChild(span);
+                }, index * 450); 
+            });
+
+            setTimeout(() => {
+                log("STREAM ENDED. ANALYSIS: 30% Logic preserved. 70% Noise.");
+            }, words.length * 450 + 500);
+        }
+
+        function resetSystem() {
+            document.getElementById('displayArea').innerHTML = '[SYSTEM REBOOTED]';
+            document.getElementById('consoleLog').innerHTML = '> System initialized...<br>> Ready for next input.<br>';
+        }
+    </script>
+</body>
+</html>
