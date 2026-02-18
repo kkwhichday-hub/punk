@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>BIENVENUE_DANS_MON_MONDE_V9</title>
+    <style>
+        :root { 
+            --gold: #ffcc00; --rust: #ff4500; --bg: #0a0a0a; --green: #39ff14; --pink: #ff00c1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; overflow: hidden; }
+        
+        body { 
+            background: var(--bg); color: var(--gold); 
+            font-family: 'Impact', sans-serif; height: 100vh; width: 100vw;
+            display: flex; flex-direction: column;
+        }
+
+        /* 扫描激光线动画 */
+        body::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+            background: rgba(255, 204, 0, 0.2); box-shadow: 0 0 20px var(--gold);
+            animation: scan 3s linear infinite; z-index: 999; pointer-events: none;
+        }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+
+        nav { 
+            height: 10vh; display: flex; background: #000; padding: 10px; gap: 5px;
+            border-bottom: 5px solid var(--rust); transform: skewX(-2deg);
+        }
+        nav button { 
+            flex: 1; background: transparent; color: var(--gold); border: 2px solid var(--gold);
+            font-size: 1.4rem; font-weight: bold; cursor: pointer; transition: 0.2s;
+            text-transform: uppercase;
+        }
+        nav button.active { background: var(--gold); color: #000; box-shadow: 0 0 30px var(--gold); }
+
+        .view-port { flex: 1; padding: 2vh; position: relative; }
+        .page { display: none; height: 100%; flex-direction: column; justify-content: center; align-items: center; }
+        .page.active { display: flex; animation: powerOn 0.4s ease-out; }
+        @keyframes powerOn { 0% { opacity: 0; transform: scale(1.1); filter: brightness(3); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
+
+        h2 { font-size: 5rem; text-transform: uppercase; color: var(--rust); text-shadow: 4px 4px #000; margin-bottom: 2vh; }
+        
+        /* P2: 对比 */
+        .grid-comp { display: grid; grid-template-columns: 1fr 1fr; gap: 2vw; width: 100%; height: 60vh; }
+        .panel { border: 4px solid var(--gold); background: rgba(20,20,20,0.9); padding: 20px; }
+        .word-row { font-size: 2.2rem; margin: 1.5vh 0; font-family: 'Courier New', monospace; }
+
+        /* P3: 脑机仿真 - 布局优化 */
+        .brain-core { 
+            width: 95%; height: 55vh; border: 5px solid var(--rust); background: #000;
+            display: flex; flex-wrap: wrap; justify-content: space-around;
+            align-items: center; align-content: space-around; padding: 30px; 
+            box-shadow: inset 0 0 80px rgba(255,69,0,0.2);
+        }
+        .data-token { font-size: 3.8rem; font-weight: 900; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .lock { color: var(--green); text-shadow: 0 0 20px var(--green); }
+        .trash { 
+            color: var(--pink); text-decoration: line-through; opacity: 0.3; 
+            filter: blur(1px); display: inline-block;
+        }
+
+        .btn-mega { 
+            height: 12vh; width: 40%; background: var(--rust); color: white; border: none;
+            font-size: 2.5rem; font-weight: bold; cursor: pointer; margin-top: 2vh;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        /* P4: 德里达 */
+        .philosophy-wall { background: var(--rust); color: #000; padding: 40px; transform: rotate(-1deg); }
+        .quote-giant { font-size: 6rem; line-height: 1; text-transform: uppercase; }
+
+        .status-bar { font-family: monospace; font-size: 1.5rem; color: var(--green); margin-top: 2vh; }
+        
+        ul.bilan-list { font-size: 2rem; color: var(--gold); list-style: square; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <button onclick="go(1)" id="b1" class="active">01_ENTRÉE</button>
+        <button onclick="go(2)" id="b2">02_SYSTÈME</button>
+        <button onclick="go(3)" id="b3">03_SIMULATION</button>
+        <button onclick="go(4)" id="b4">04_VÉRITÉ</button>
+        <button onclick="go(5)" id="b5">05_BILAN</button>
+    </nav>
+
+    <div class="view-port">
+        
+        <div id="p1" class="page active">
+            <h2>MON MONDE</h2>
+            <p style="font-size: 3rem; background: var(--gold); color: #000; padding: 10px 30px;">INGÉNIEUR DE LA LANGUE</p>
+            <p style="font-size: 2rem; margin-top: 3vh;">Ma tête est un processeur. Le français est mon code.</p>
+        </div>
+
+        <div id="p2" class="page">
+            <div class="grid-comp">
+                <div class="panel">
+                    <h3 style="font-size:3rem; color: var(--green);">FR_LOGIQUE</h3>
+                    <div class="word-row">NA<b>TION</b> [SJON]</div>
+                    <div class="word-row">STA<b>TION</b> [SJON]</div>
+                    <div class="word-row">BATEAU [O]</div>
+                </div>
+                <div class="panel">
+                    <h3 style="font-size:3rem; color: var(--pink);">EN_CHAOS</h3>
+                    <div class="word-row">NA<b>TION</b> [SHUN]</div>
+                    <div class="word-row">QUES<b>TION</b> [CHUN]</div>
+                    <div class="word-row">THOUGH [OH] / TOUGH [UF]</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="p3" class="page">
+            <h2>TRAITEMENT AUDIO</h2>
+            <div class="brain-core" id="brainCore">
+                <div style="font-size: 2rem; opacity: 0.3;">[SYSTÈME PRÊT : EN ATTENTE DU SIGNAL]</div>
+            </div>
+            <button class="btn-mega" onclick="process()">LANCE SIMULATION</button>
+            <div class="status-bar" id="statusLine">> PRÊT...</div>
+        </div>
+
+        <div id="p4" class="page">
+            <div class="philosophy-wall"><div class="quote-giant">"Il n'y a pas de <br> hors-texte."</div></div>
+            <p style="font-size: 2rem; color: var(--rust); margin-top: 4vh;">SANS TEXTE = 0% LOGIQUE.</p>
+        </div>
+
+        <div id="p5" class="page">
+            <h2 style="margin-bottom: 5vh;">RAPPORT_FINAL_SYSTÈME</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 3vh; width: 90%; max-width: 1000px;">
+                
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1; border: 2px solid var(--rust); background: rgba(255,69,0,0.05); padding: 25px; text-align: center;">
+                        <b style="color:var(--rust); font-size: 2rem; display: block; margin-bottom: 10px;">PROBLÈME</b>
+                        <span style="font-size: 1.8rem;">Désynchronisation Audio / Sens</span>
+                    </div>
+                    <div style="flex: 1; border: 2px solid var(--rust); background: rgba(255,69,0,0.05); padding: 25px; text-align: center;">
+                        <b style="color:var(--rust); font-size: 2rem; display: block; margin-bottom: 10px;">ANALYSE</b>
+                        <span style="font-size: 1.8rem;">Latence de traitement (Signal perdu)</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1; border: 2px solid var(--green); background: rgba(57,255,20,0.05); padding: 25px; text-align: center;">
+                        <b style="color:var(--green); font-size: 2rem; display: block; margin-bottom: 10px;">STRATÉGIE</b>
+                        <span style="font-size: 1.8rem;">Écoute active & Dictée</span>
+                    </div>
+                    <div style="flex: 1; border: 2px solid var(--green); background: rgba(57,255,20,0.05); padding: 25px; text-align: center;">
+                        <b style="color:var(--green); font-size: 2rem; display: block; margin-bottom: 10px;">OBJECTIF</b>
+                        <span style="font-size: 1.8rem;">Synchronisation 1:1 (Temps réel)</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <p style="font-size: 4rem; color: var(--green); margin-top: 6vh; text-shadow: 0 0 20px var(--green); letter-spacing: 10px;">
+                MERCI !
+            </p>
+        </div>      
+    </div>
+
+    <script>
+        function go(n) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById('p' + n).classList.add('active');
+            document.getElementById('b' + n).classList.add('active');
+        }
+
+        const phrasesBank = [
+            { t: "Si j'avais une voiture rapide, je mangerais une pizza avec toi.", types: ['gram', 'gram', 'adj', 'noun', 'adj', 'gram', 'verb', 'gram', 'noun', 'gram', 'gram'] },
+            { t: "Si nous étions des robots intelligents, nous parlerions un français parfait.", types: ['gram', 'gram', 'verb', 'gram', 'noun', 'adj', 'gram', 'verb', 'gram', 'noun', 'adj'] },
+            { t: "Je regarderais un film intéressant si je n'étudiais pas cette leçon.", types: ['gram', 'verb', 'gram', 'noun', 'adj', 'gram', 'gram', 'verb', 'gram', 'gram', 'noun'] }
+        ];
+
+        function process() {
+            const core = document.getElementById('brainCore');
+            const status = document.getElementById('statusLine');
+            core.innerHTML = '';
+            
+            const randomSource = phrasesBank[Math.floor(Math.random() * phrasesBank.length)];
+            const words = randomSource.t.split(' ');
+            
+            status.innerHTML = '> ANALYSE DU SIGNAL...';
+
+            words.forEach((word, i) => {
+                setTimeout(() => {
+                    const span = document.createElement('span');
+                    span.innerText = word;
+                    span.className = 'data-token';
+                    
+                    const type = randomSource.types[i];
+                    let isUnderstood = false;
+
+                    // 1. 语法词（Si, je, avec, le...）最稳定，容易听懂
+                    if (type === 'gram') isUnderstood = true;
+                    // 2. 形容词（adj）全部听不懂
+                    else if (type === 'adj') isUnderstood = false;
+                    // 3. 名词和动词（noun/verb）50%几率听懂
+                    else if (type === 'noun' || type === 'verb') isUnderstood = Math.random() > 0.5;
+
+                    if (isUnderstood) {
+                        span.classList.add('lock');
+                        status.innerHTML = `> [OK] IDENTIFIÉ : ${word}`;
+                    } else {
+                        span.classList.add('trash');
+                        const r = Math.random() * 40 - 20;
+                        const y = 30 + Math.random() * 20;
+                        span.style.transform = `rotate(${r}deg) translateY(${y}px) skewX(${r/2}deg)`;
+                        status.innerHTML = `> [LOST] DATA_DROPPED`;
+                    }
+                    
+                    core.appendChild(span);
+                    if (i === words.length - 1) {
+                        setTimeout(() => status.innerHTML = '> ANALYSE TERMINÉE : PERTE DE DONNÉES MASSIVE.', 500);
+                    }
+                }, i * 400);
+            });
+        }
+    </script>
+</body>
+</html>
