@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ACCUEIL_SYSTÈME_FR</title>
+    <style>
+        :root {
+            --gold: #ffcc00; --rust: #ff4500; --bg: #0a0a0a; --green: #39ff14;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; overflow: hidden; }
+
+        body {
+            background: var(--bg); color: var(--gold);
+            font-family: 'Impact', monospace, sans-serif;
+            height: 100vh; width: 100vw; display: flex;
+            justify-content: center; align-items: center;
+            flex-direction: column;
+            position: relative;
+            background-image: 
+                radial-gradient(circle, rgba(255,69,0,0.05) 1px, transparent 1px),
+                linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.8)),
+                url('https://www.transparenttextures.com/patterns/dark-mosaic.png'); /* 废土背景 */
+            background-size: 30px 30px, 100% 100%;
+        }
+
+        /* 登录页面的酷炫特效 */
+        .welcome-container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            opacity: 0; /* 初始隐藏 */
+            animation: fadeIn 2s forwards 0.5s; /* 延迟加载动画 */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 8rem; /* 巨大标题 */
+            color: var(--rust);
+            text-shadow: 0 0 30px var(--rust), 0 0 50px rgba(255,69,0,0.5);
+            margin-bottom: 2vh;
+            letter-spacing: 5px;
+            animation: glitchText 1s infinite alternate; /* 文字故障效果 */
+        }
+
+        @keyframes glitchText {
+            0% { transform: skewX(0deg); text-shadow: 0 0 30px var(--rust); }
+            20% { transform: skewX(-5deg); text-shadow: 0 0 30px var(--rust), 5px 0 0 rgba(255,0,0,0.3); }
+            40% { transform: skewX(5deg); text-shadow: 0 0 30px var(--rust), -5px 0 0 rgba(0,255,0,0.3); }
+            60% { transform: skewX(0deg); text-shadow: 0 0 30px var(--rust); }
+            80% { transform: skewX(-2deg); text-shadow: 0 0 30px var(--rust), 2px 0 0 rgba(0,0,255,0.3); }
+            100% { transform: skewX(0deg); text-shadow: 0 0 30px var(--rust); }
+        }
+
+
+        .loading-bar {
+            width: 80%;
+            max-width: 600px;
+            height: 20px;
+            background: rgba(255, 204, 0, 0.1);
+            border: 2px solid var(--gold);
+            margin-top: 5vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background: var(--green);
+            animation: loadProgress 3s forwards 1s; /* 加载动画，延迟1秒开始 */
+            box-shadow: 0 0 15px var(--green);
+        }
+
+        @keyframes loadProgress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        .loading-text {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin-top: 2vh;
+            animation: textDots 1s infinite steps(3, end); /* 文本打点动画 */
+        }
+
+        @keyframes textDots {
+            0%, 20% { content: 'CHARGEMENT.'; }
+            40%, 60% { content: 'CHARGEMENT..'; }
+            80%, 100% { content: 'CHARGEMENT...'; }
+        }
+        
+        .enter-button {
+            background: var(--rust);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 8vh;
+            cursor: pointer;
+            box-shadow: 0 0 40px var(--rust);
+            transition: 0.3s ease;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); /* 斜切按钮 */
+            animation: pulseButton 1.5s infinite alternate; /* 按钮脉冲动画 */
+            display: none; /* 初始隐藏 */
+        }
+
+        .enter-button.show {
+            display: block; /* 加载完成后显示 */
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .enter-button:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+        }
+
+        @keyframes pulseButton {
+            from { box-shadow: 0 0 20px var(--rust); }
+            to { box-shadow: 0 0 60px var(--rust); }
+        }
+
+        /* 底部系统信息 */
+        .system-info {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--green);
+            font-family: monospace;
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 2.5s; /* 延迟出现 */
+        }
+    </style>
+</head>
+<body>
+    <audio id="startupSound" src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-click-1282.mp3" preload="auto"></audio>
+    <audio id="buttonClickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-1125.mp3" preload="auto"></audio>
+
+    <div class="welcome-container">
+        <h1>BIENVENUE</h1>
+        <p class="loading-text" data-text="CHARGEMENT."></p>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+        <button class="enter-button" onclick="goToMainPage()">ENTRER</button>
+    </div>
+
+    <div class="system-info">
+        > SYSTÈME V9.0 ONLINE <br>
+        > PRÊT POUR DÉPLOIEMENT
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startupSound = document.getElementById('startupSound');
+            startupSound.play(); // 页面加载时播放启动音效
+
+            // 加载完成后显示按钮
+            const loadingProgress = document.querySelector('.loading-progress');
+            const enterButton = document.querySelector('.enter-button');
+            const loadingText = document.querySelector('.loading-text');
+
+            loadingProgress.addEventListener('animationend', () => {
+                enterButton.classList.add('show');
+                loadingText.style.display = 'none'; // 隐藏加载文本
+                enterButton.style.opacity = 0;
+                enterButton.animate([
+                    { opacity: 0, transform: 'translateY(20px)' },
+                    { opacity: 1, transform: 'translateY(0)' }
+                ], { duration: 500, fill: 'forwards' });
+            });
+        });
+
+        function goToMainPage() {
+            const buttonClickSound = document.getElementById('buttonClickSound');
+            buttonClickSound.play();
+            // 确保你的主汇报页面文件名是这个
+            window.location.href = 'system.html'; 
+        }
+    </script>
+</body>
+</html>
